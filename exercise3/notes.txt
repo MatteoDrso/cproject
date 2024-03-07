@@ -1,0 +1,6 @@
+ablauf compiling:
+
+-E Präprozessor (cpp)
+-S Kompiler (cc1)
+-c Assembler (as)
+   Linker (ld)
