@@ -16,6 +16,7 @@ void pop(struct Stack *stack){
     int arrayLength = lenInt(stack->array);
     for(int i = stack->top; i < arrayLength-1; i++){
         stack->array[i] = stack->array[i+1];
+        
     }
 }
 
