@@ -1,0 +1,7 @@
+Stadt ,Einwohner ,Flaeche ,Land
+Berlin ,3613495,891.68,Berlin
+Hamburg ,1830584,755.22,Hamburg
+Muenchen ,1456039,310.70,Bayern
+Koeln ,1080394,405.02,Nordrhein -Westfalen
+Frankfurt ,746878,248.31,Hessen
+Stuttgart ,632743,207.35,Baden -Wuerttemberg
