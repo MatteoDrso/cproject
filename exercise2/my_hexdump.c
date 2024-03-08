@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h> 
 #include <string.h>
+#include <ctype.h>
 
 int main(int argc, char *argv[]) 
 {
@@ -18,8 +19,11 @@ int main(int argc, char *argv[])
       printf("%08x  ",offset);
     }
 
-    printf("%x ", c);
-    buf[i] = c;
+    printf("%02x ", c);
+    if (isprint(c))
+      buf[i] = c;
+    else
+      buf[i] = '.';
     i++;
     offset++;
 
