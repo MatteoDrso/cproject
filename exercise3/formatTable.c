@@ -9,13 +9,18 @@ void getWordLength(FILE *file, int array[]);
 void printTable(FILE *file, int array[]);
 bool isValidCellContent(int x);
 
-int main() {
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        printf("provide arguments like: %s \"path_to_file\"\n", argv[0]);
+        return 1;
+    }
+    char *filepath = argv[1];
     int longestWordForRow[MAX_BUFF_SIZE] = {0};
 
-    FILE *file = fopen("tableExample.csv", "r");
+    FILE *file = fopen(filepath, "r");
     getWordLength(file, longestWordForRow);
 
-    file = fopen("tableExample.csv", "r");
+    file = fopen(filepath, "r");
     printTable(file, longestWordForRow);
 
     fclose(file);
