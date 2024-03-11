@@ -48,7 +48,7 @@ void printReverse(int counter, struct node *root){
     int count2 = 0;
     for(int i = 0; i < counter; i++) {
         buf[i] = (*root).value;
-        free(root); // not tested
+        //free(root); // not tested
         root = (*root).next;
         count2++;
     }

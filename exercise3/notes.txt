@@ -4,3 +4,8 @@ ablauf compiling:
 -S Kompiler (cc1)
 -c Assembler (as)
    Linker (ld)
+
+
+header übersicht:
+
+https://en.cppreference.com/w/c

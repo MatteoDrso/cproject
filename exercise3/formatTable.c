@@ -19,10 +19,10 @@ int main(int argc, char *argv[]) {
 
     FILE *file = fopen(filepath, "r");
     getWordLength(file, longestWordForRow);
+    fclose(file);
 
     file = fopen(filepath, "r");
     printTable(file, longestWordForRow);
-
     fclose(file);
 
     return 0;
@@ -34,7 +34,7 @@ void getWordLength(FILE *file, int array[]){
     int col = 0;
 
     while ((c = fgetc(file)) != EOF) {
-        if (c == 10) {
+        if (c == '\n') {
             if (currentWordLength > array[col]) {
                 array[col] = currentWordLength;
             }
@@ -42,7 +42,7 @@ void getWordLength(FILE *file, int array[]){
             col = 0;
             continue;
         }
-        if (c == 44) {
+        if (c == ',') {
             if (currentWordLength > array[col]) {
                 array[col] = currentWordLength;
             }
