@@ -1,4 +1,0 @@
-This is an example text.
-It has X words,
-Y characters
-and Z lines.aas
