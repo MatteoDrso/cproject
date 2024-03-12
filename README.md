@@ -1,4 +1,4 @@
-This is a project that has been created by Josua Kaden, Moritz *insert (lmao)*, and Matteo D'Urso for the intersession C-programming course.
+This is a project that has been created by Josua Kaden, Moritz Zitzow, and Matteo D'Urso for the intersession C-programming course.
 
 The project is a Pathfinding Algorithm Visualizer. That means it should include as a minimum functionalities like:
 - graphing out a GUI, that is either on a Terminal or using a real GUI with a window, with
