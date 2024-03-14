@@ -26,6 +26,7 @@ int dijkstra(canvas *c){
 	//init a currentPixel which points always to the Pixel which we are on
 	pixel *currentPixel = malloc(sizeof(pixel *currentPixel));
 	currentPixel = start;
+
 	int cPX = canvas.start_x;  
 	int cPY = canvas.start_y; 
 	
