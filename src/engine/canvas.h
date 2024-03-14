@@ -4,7 +4,7 @@
 #define PATHFIND_CANVAS_H
 
 typedef struct {
-  bool visited, wall;
+  int status;
 } pixel;
 
 typedef struct {
@@ -15,7 +15,9 @@ typedef struct {
 
   char *path;
 
-  struct pixel *canv;
+  pixel *canv;
+
+  int *path; //array of offsets
 }canvas;
 
 //imported as static, to fasten up runtime as function is inserted inline (ask Robert lol).
@@ -40,6 +42,12 @@ enum directions {
     EAST = 1,
     SOUTH = 2,
     WEST = 3
+};
+
+enum status {
+    WALL = -2,
+    UNVISITED = -1,
+    START = 0
 };
 
 #endif

@@ -13,14 +13,13 @@ canvas init_canvas(int width, int height, int start_x, int start_y, int end_x, i
   c.end_x = end_x;
   c.end_y = end_y;
 
-  c.canv = malloc(sizeof (struct pixel) * height * width);
+  c.canv = malloc(sizeof (pixel) * height * width);
+  c.path = malloc(sizeof c.canv);
 
   for (int i = 0; i < height; i++) {
     for (int j = 0; j < width; j++) {
-      struct pixel p;
-      p.visited = false;
-      p.wall = true;
-      p.name = 2;
+      pixel p;
+      p.status = UNVISITED;
       c.canv[i * width + j] = p;
     }
   }
@@ -29,26 +28,9 @@ canvas init_canvas(int width, int height, int start_x, int start_y, int end_x, i
 }
 
 // Returns Pixels in order: North, East, South, West
-void neighbours(canvas *c, int x, int y, struct pixel **n)
-{
-  if (y > 0 && y <= c->height && x >= 0 && x <= c->width) {
-    n[NORTH] = at(c, x, y-1);      
-    } else {
-    n[NORTH] = NULL;
-  }
-  if (y >= 0 && y <= c->height && x >= 0 && x < c->width-1) {
-    n[EAST] = at(c, x+1, y);
-  } else {
-    n[EAST] = NULL;
-  }
-  if (y >= 0 && y < c->height-1 && x >= 0 && x <= c->width) {
-    n[SOUTH] = at(c, x, y+1);
-  } else {
-    n[SOUTH] = NULL;
-  }
-  if (y >= 0 && y <= c->height && x > 0 && x <= c->width) {
-    n[WEST] = at(c, x-1, y);
-  } else {
-    n[WEST] = NULL;
-  }
+void neighbours(canvas *c, int x, int y, struct pixel **n){
+  n[NORTH] = at(c, x, y-1);
+  n[EAST] = at(c, x+1, y);
+  n[SOUTH] = at(c, x, y-1);
+  n[WEST] = at(c, x-1, y);
 }
