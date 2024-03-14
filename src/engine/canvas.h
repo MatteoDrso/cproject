@@ -3,11 +3,11 @@
 #ifndef PATHFIND_CANVAS_H
 #define PATHFIND_CANVAS_H
 
-typedef struct {
+typedef struct pixel{
   int status;
 } pixel;
 
-typedef struct {
+typedef struct canvas{
   int width, height;
 
   int start_x, start_y;
