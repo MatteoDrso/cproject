@@ -1,41 +1,42 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "canvas.h"
+#inlcude "canvas.h"
+
 enum {
-	WEIGHT_WALL = 1024,
-	WEIGHT_PATH = 1
+	WEIGHT_PATH = 1;
 };
 
-// is copy of canvas as matrix, saves 
-// dist from start for each pixel
+// is copy of canvas as matrix, saves dist from start for each pixel
 static int **distanceMatrix;
 
-// also some structures or variable to save path to end
+int copyMatrix(int *from[], int *to[]);
 
-int copyArray(int *from[], int *to[]);
-
-int getHeight(int *arg);
-int getWidth(int *arg);
-
+//int -1 failed, 0 when ok
 int dijkstra(canvas *c){
+	
+	if(something){
+		return -1;//algorithm failed
+	}
 
 	// init canvas, start and end
-	canvas c = init_canvas();
-	pixel start = at(canvas.canv, canvas.start_x, canvas.start_y);
-	start.visited = true;
+	pixel *start = at(canvas.canv, canvas.start_x, canvas.start_y);
+	start->visited = true;
 	
 	//init a currentPixel which points always to the Pixel which we are on
 	pixel *currentPixel = malloc(sizeof(pixel *currentPixel));
-	int *cPX = canvas.start_x;  
-	int *cPY = canvas.start_y; 
+	currentPixel = start;
+
+	int cPX = canvas.start_x;  
+	int cPY = canvas.start_y; 
 	
 	int found = 1;
 	while(found != 0){
-		found = step2(currentPixel);
+		found = step2(&canvas, currentPixel, &cPX, &cPY);	
 	}
 
-	//go through distMatrix
+	//go through distMatrix follow min path
+	return 0;
 }
 
 int copyMatrix(int *from[], int *to[]){
@@ -46,26 +47,40 @@ int copyMatrix(int *from[], int *to[]){
 	}	
 }
 
-// also give cpX/Y and canvas
-int step2(pixel *currentPixel){
-
-	// find adjacent dist node from [top,right,bottom,left]	
-	pixel neighbours[4] = getNeighbours(start);
+int step2(canvas *c, pixel *cP, int *cpX, int *cpY){
+	/*
+	start: cP = prioQueue.dequeue
+	1: counter += 1
+	2: cp.status = counter
+	3: if(cP.coords == end.coords){break;}
+	4: iterate through neighbours of cP
+		-> all with (n.status >= 0) in prioQueue
+		-> and their distMatrix val is cP`s+1 (cP.coords are known)
+	*/
 	
-	for(int i=0; i<4; i++){
-		if(neighbours[i] == 1){
-			*currentPixel = neighbours[i];
-			distanceMatrix[][] = 
+	pixel *neigbours[4];
+
+	/*start while(true){
+		cP = prioQueue.dequeue
+	
+		//2:
+		cP->status = counter;
+	
+		//3:
+		if(cpX == c->end_x && cpY == c->end_y){
+			break;
 		}
-	}
 
-	// mark as visited	
-	currentPixel->visited = true;
-
-	// writed dist value to distMatrix
+		//4:
+		//[north, east, south, west]	
+		neighbours(c, cpX, cpY, &cP, neighbours);
 	
-	// repeat until canvas->end is found
+		for(int i=0; i<4; i++){
+			
+		}
+	}*/	
 
+	return 0;
 }
 
 

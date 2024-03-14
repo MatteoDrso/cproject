@@ -1,22 +1,32 @@
 #ifndef QUEUE_STACK_DATASTRUCTURES_H
 #define QUEUE_STACK_DATASTRUCTURES_H
 
-struct stack {
+typedef struct stack {
     //implemented the stack as empty ascending.
 
     struct pixel *stack_arr;
     int length; //has to be initialized to the number of pixel in the canvas (width * height)
     int top;
 
-};
+}stack;
 
-struct queue {
+typedef struct queue {
 
     struct pixel *queue_arr;
     int length; //has to be initialized to the number of pixel in the canvas (width * height)
     int top, bot;
 
-};
+}queue;
+
+typedef struct prio_queue {
+
+    struct pixel *prio_queue_arr;
+    int length; //has to be initialized to the number of pixel in the canvas (width * height)
+    int top, bot;
+
+}prio_queue;
+
+
 
 void stack_init(struct stack *s, int length);
 void queue_init(struct queue *q, int length);
