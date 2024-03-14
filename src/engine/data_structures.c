@@ -1,26 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
-
-struct stack {
-    //implemented the stack as empty ascending.
-
-    struct pixel *stack_arr;
-    int length; //has to be initialized to the number of pixel in the canvas (width * height)
-    int top;
-
-};
-
-struct queue {
-
-    struct pixel *queue_arr;
-    int length; //has to be initialized to the number of pixel in the canvas (width * height)
-    int top, bot;
-
-};
-
-struct pixel {
-    int val;
-};
+#include "canvas.h"
+#include "data_structures.h"
 
 void stack_init(struct stack *s, int length){
     s->stack_arr = malloc(s->length * sizeof(struct pixel));
@@ -78,23 +59,4 @@ struct pixel queue_pop(struct queue *q){
         q->bot-=q->length;
     }
     return p;
-}
-
-int main(int argc, char *argv[]){
-
-    struct pixel p1, p2, p3, p4, p5;
-    struct queue q;
-
-    p1.val = 1;
-    p2.val = 2;
-    p3.val = 3;
-
-    queue_init(&q, 3);
-    queue_push(&q, p1);
-    queue_push(&q, p2);
-    queue_push(&q, p3);
-    //p5 = queue_pop(&q);
-    queue_push(&q, p4);
-    
-
 }
