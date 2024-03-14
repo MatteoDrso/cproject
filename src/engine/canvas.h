@@ -13,8 +13,6 @@ typedef struct canvas{
   int start_x, start_y;
   int end_x, end_y;
 
-  char *path;
-
   pixel *canv;
 
   int *path; //array of offsets
@@ -30,7 +28,7 @@ static struct pixel *at_offset(canvas *c, int o)
 {
   // if you want to calculate coords using offset:
   // int y = o % c->width;
-  // int x = o - (c->width * y)
+  // int x = o - (c->width * y) 
   return &c->canv[o];
 }
 
