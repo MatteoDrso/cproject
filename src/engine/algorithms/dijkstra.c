@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-//#inlcude "canvas.c"
-
+#include "canvas.h"
 enum {
-	WEIGHT_WALL = 1024;
-	WEIGHT_PATH = 1;
+	WEIGHT_WALL = 1024,
+	WEIGHT_PATH = 1
 };
 
 // is copy of canvas as matrix, saves 
@@ -19,10 +18,10 @@ int copyArray(int *from[], int *to[]);
 int getHeight(int *arg);
 int getWidth(int *arg);
 
-int main(int argc, int **argv){
+int dijkstra(canvas *c){
 
 	// init canvas, start and end
-	canvas = initCanvas();
+	canvas c = init_canvas();
 	pixel start = at(canvas.canv, canvas.start_x, canvas.start_y);
 	start.visited = true;
 	
