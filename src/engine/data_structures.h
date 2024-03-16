@@ -18,21 +18,23 @@ typedef struct queue {
 
 }queue;
 
-typedef struct prio_queue {
+typedef struct minHeap {
 
-    struct pixel *prio_queue_arr;
+    struct pixel *minHeap_arr;
     int length; //has to be initialized to the number of pixel in the canvas (width * height)
     int top, bot;
 
-}prio_queue;
-
+}minHeap;
 
 
 void stack_init(struct stack *s, int length);
 void queue_init(struct queue *q, int length);
+void minHeap_init(struct minHeap *q, int length);
 void stack_push(struct stack *s, struct pixel p);
 void queue_push(struct queue *q, struct pixel p);
+void minHeap_push(struct minHeap *q, struct pixel p);
 struct pixel stack_pop(struct stack *s);
 struct pixel queue_pop(struct queue *q);
+struct pixel minHeap_pop(struct minHeap *q);
 
 #endif
