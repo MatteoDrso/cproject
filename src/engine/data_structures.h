@@ -48,4 +48,20 @@ static int get_smallest_child(min_Heap *h, int index_node);
 static void bubble_up(min_Heap *h, node *n);
 static void bubble_down(min_Heap *h, node *n);
 
+static inline bool stack_is_empty(stack *s){
+    return s->top<=0;
+} 
+
+static inline bool stack_is_full(stack *s){
+    return s->top == s->length;
+}  
+
+static inline bool queue_is_full(queue *q){
+    return q->top == q->bot-1 || (q->top == q->length-1 && q->bot == 0);
+}  
+
+static inline bool queue_is_empty(queue *q){
+    return q->bot == q->top;
+}  
+
 #endif
