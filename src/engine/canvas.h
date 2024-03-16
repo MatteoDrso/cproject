@@ -5,13 +5,13 @@
 
 typedef struct pixel{
   int status;
+  int x, y;
 } pixel;
 
 typedef struct canvas{
   int width, height;
 
-  int start_x, start_y;
-  int end_x, end_y;
+  pixel *start, *end;
 
   pixel *canv;
 
@@ -19,12 +19,16 @@ typedef struct canvas{
 }canvas;
 
 //imported as static, to fasten up runtime as function is inserted inline (ask Robert lol).
-static struct pixel *at(canvas *c, int x, int y)
+static inline struct pixel *at(canvas *c, int x, int y)
 {
   return &c->canv[y * c->width + x];
 }
 
-static struct pixel *at_offset(canvas *c, int o)
+static inline bool is(pixel *p, int status){
+  return p->status == status;
+}
+
+static inline struct pixel *at_offset(canvas *c, int o)
 {
   // if you want to calculate coords using offset:
   // int y = o % c->width;
@@ -32,8 +36,11 @@ static struct pixel *at_offset(canvas *c, int o)
   return &c->canv[o];
 }
 
+
 canvas init_canvas(int width, int height, int start_x, int start_y, int end_x, int end_y);
+void print_canvas(canvas *c);
 void neighbours(canvas *c, int x, int y, struct pixel **n);
+
 
 enum directions {
     NORTH = 0,
@@ -45,7 +52,8 @@ enum directions {
 enum status {
     WALL = -2,
     UNVISITED = -1,
-    START = 0
+    START = 0,
+    END = -3,
 };
 
 #endif
