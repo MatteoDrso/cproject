@@ -9,7 +9,6 @@ enum {
 
 // is copy of canvas as matrix, saves dist from start for each pixel
 static int **distanceMatrix;
-
 int copyMatrix(int *from[], int *to[]);
 
 //int -1 failed, 0 when ok
@@ -47,7 +46,7 @@ int copyMatrix(int *from[], int *to[]){
 	}	
 }
 
-int step2(canvas *c, pixel *cP, int *cpX, int *cpY){
+int step2(canvas *c, pixel *cP, min_Heap *h){
 	/*
 	start: cP = prioQueue.dequeue
 	1: counter += 1
@@ -58,10 +57,11 @@ int step2(canvas *c, pixel *cP, int *cpX, int *cpY){
 		-> and their distMatrix val is cP`s+1 (cP.coords are known)
 	*/
 	
-	pixel *neigbours[4];
+	static int pix_counter = 0;
+	pixel *neighbours[4];
 
-	/*start while(true){
-		cP = prioQueue.dequeue
+	while(true){
+		cP = min_Heap_pop(h);
 	
 		//2:
 		cP->status = counter;
@@ -73,12 +73,14 @@ int step2(canvas *c, pixel *cP, int *cpX, int *cpY){
 
 		//4:
 		//[north, east, south, west]	
-		neighbours(c, cpX, cpY, &cP, neighbours);
+		neighbours(c, cP, neighbours);
 	
 		for(int i=0; i<4; i++){
-			
+			if(neighbours[i]->status == -1){
+				min_Heap_insert(h,cp,pix_counter++);
+			}	
 		}
-	}*/	
+	}	
 
 	return 0;
 }

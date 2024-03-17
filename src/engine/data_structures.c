@@ -130,6 +130,7 @@ static int get_smallest_child(min_Heap *h, int index_node){
     node *leftChild = h->min_Heap_arr[2*index_node+1];
     node *rightChild = h->min_Heap_arr[2*index_node+2];
     node *parent = h->min_Heap_arr[index_node];
+    //if [north,east,south,west] should be mantained then <=-> < 
     if((parent->key <= leftChild->key) && (parent->key <= rightChild->key)){
         return index_node;
     }
