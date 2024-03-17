@@ -15,7 +15,7 @@ typedef struct canvas{
 
   pixel *canv;
 
-  int *path; //array of offsets
+  pixel **path; //array of pointers to pixel
 }canvas;
 
 //imported as static, to fasten up runtime as function is inserted inline (ask Robert lol).
@@ -35,7 +35,6 @@ static inline struct pixel *at_offset(canvas *c, int o)
   // int x = o - (c->width * y) 
   return &c->canv[o];
 }
-
 
 canvas init_canvas(int width, int height, int start_x, int start_y, int end_x, int end_y);
 void print_canvas(canvas *c);
