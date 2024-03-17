@@ -79,7 +79,9 @@ void print_canvas(canvas *c){
 }
 
 // Returns Pixels in order: North, East, South, West
-void neighbours(canvas *c, int x, int y, struct pixel **n){
+void neighbours(canvas *c, pixel *current_pixel, struct pixel **n){
+  int x = current_pixel->x;
+  int y = current_pixel->y;
   n[NORTH] = at(c, x, y-1);
   n[EAST] = at(c, x+1, y);
   n[SOUTH] = at(c, x, y-1);
