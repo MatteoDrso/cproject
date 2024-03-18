@@ -67,9 +67,9 @@ void print_canvas(canvas *c){
           break;
         default:
           if(p->status > 0){
-            printf("x ");
-          } else {
-            printf("? ");
+            printf(" x ");
+           } else {
+            printf(" ? ");
           }
       }
     }
