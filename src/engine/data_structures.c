@@ -97,6 +97,14 @@ struct pixel *min_Heap_pop(struct min_Heap *h){
     return p; 
 }
 
+void min_Heap_clear(min_Heap *h){
+    int counter = 0;
+    while(h->min_Heap_arr[counter] != NULL){
+        free(h->min_Heap_arr[counter]);
+    }
+    free(h->min_Heap_arr);
+}
+
 //helper functions for heap
 static void bubble_up(min_Heap *h, node *n){
     int idx_parent = h->bot;
@@ -147,5 +155,6 @@ static void swap(min_Heap *h, int index_parent, int index_child){
     h->min_Heap_arr[index_parent] = h->min_Heap_arr[index_child];
     h->min_Heap_arr[index_child] = temp;
 }
+
 
 
