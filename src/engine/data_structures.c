@@ -3,9 +3,6 @@
 #include "canvas.h"
 #include "data_structures.h"
 
-int main(void){return 0;}//just for compiling
-
-
 void stack_init(struct stack *s, int length){
     s->stack_arr = malloc(s->length * sizeof(struct pixel));
     s->length = length;
