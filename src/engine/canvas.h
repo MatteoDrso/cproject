@@ -5,7 +5,8 @@
 
 typedef struct pixel{
   int status;
-  int x, y;
+  int x, y; 
+  struct pixel *parent;
 } pixel;
 
 typedef struct canvas{
@@ -39,7 +40,7 @@ static inline struct pixel *at_offset(canvas *c, int o)
 canvas init_canvas(int width, int height, int start_x, int start_y, int end_x, int end_y);
 void print_canvas(canvas *c);
 void neighbours(canvas *c, pixel *current_pixel, struct pixel **n);
-
+void print_path(canvas *c);
 
 enum directions {
     NORTH = 0,
