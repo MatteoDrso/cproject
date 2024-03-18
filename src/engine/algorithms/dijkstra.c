@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "../canvas.h"
 #include "../data_structures.h"
 
@@ -13,7 +14,7 @@ static pixel *get_min_neighbour(canvas *c, pixel *cP, pixel **n, int *dm);
 static int get_dist(pixel *p1, pixel *p2);
 static int canvas_empty(canvas *c);
 
-int main(void){return 0;}// for compiling
+//int main(void){return 0;}// for compiling
 
 //int -1 failed, 0 when ok
 int dijkstra(canvas *canvas){
@@ -127,7 +128,7 @@ static void init_dist_matrix(canvas *canvas){
 	distance_matrix = malloc(sizeof (int) * matrix_size);
 	for(int i=0; i<canvas->height; i++){
 		for(int j=0; j<canvas->width; j++){
-			distance_matrix[i * canvas->width + j] = 1024; //(int)pow(2,32)-1;
+			distance_matrix[i * canvas->width + j] = (int)pow(2,32)-1;
 		}
 	}
 }
