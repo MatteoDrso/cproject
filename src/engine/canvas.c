@@ -38,7 +38,7 @@ if(is(c.end, WALL)){
     printf("Illegal end point. The end has to be inbounds. End at: [%d, %d]\n", c.start->x, c.start->y);
     abort();
   } else {
-    c.start->status = END;
+    c.end->status = END;
   }
 
   return c;
@@ -51,25 +51,25 @@ void print_canvas(canvas *c){
 
   for (int i = 0; i < c->height; i++) {
     for (int j = 0; j < c->width; j++) {
-      p = at(c, i, j);
+      p = at(c, j, i);
       switch (p->status){
         case WALL:
-          printf(" # ");
+          printf("# ");
           break;
         case START:
-          printf(" S ");
+          printf("S ");
           break;
         case UNVISITED:
-          printf("   ");
+          printf("  ");
           break;
         case END:
-          printf(" E ");
+          printf("E ");
           break;
         default:
           if(p->status > 0){
-            printf(" x ");
+            printf("x ");
           } else {
-            printf(" ? ");
+            printf("? ");
           }
       }
     }
