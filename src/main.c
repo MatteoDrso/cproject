@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "./engine/canvas.h"
-#include "./engine/data_structures.h"
-#include "./engine/algorithms/algorithms.h"
+#include "canvas.h"
+#include "data_structures.h"
+#include "algorithms.h"
 
 int main(void) {
   printf("This is an interactive Pathfinding visualizer.\n");
