@@ -4,12 +4,12 @@
 #include "data_structures.h"
 
 void stack_init(struct stack *s, int length){
-    s->stack_arr = malloc(s->length * sizeof(struct pixel));
     s->length = length;
+    s->stack_arr = malloc(s->length * sizeof(__intptr_t));
     s->top = 0;
 }
 
-void stack_push(struct stack *s, struct pixel p){
+void stack_push(struct stack *s, struct pixel *p){
     if(stack_is_full(s)){
         printf("Tried to push to a stack that is full!\n");
         abort();
@@ -19,7 +19,7 @@ void stack_push(struct stack *s, struct pixel p){
 
 }
 
-struct pixel stack_pop(struct stack *s){
+struct pixel *stack_pop(struct stack *s){
     if(stack_is_empty(s)){
         printf("Tried to pop a stack that is empty!\n");
         abort();
