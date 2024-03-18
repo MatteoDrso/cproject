@@ -54,17 +54,22 @@ int main(void) {
 
 
   canvas c = init_canvas(width,height, start_x, start_y, 1,1);
-  pixel *p1;
-  pixel *p2;
 
-  p1 = at(&c, 0, 0);
-  p2 = at_offset(&c, 0);
+  printf("Canvas: \n");
+  print_canvas(&c);
 
-  if (p1 == p2) {
-    printf("Success!\n.");
+  int failed = breadth_first_search(&c);
+
+  if (failed) {
+    printf("BFS failed!\n");
   } else {
-    printf("Something went wrong.\n");
-  }
+    printf("BFS succeeded!\n");
+  } 
+
+  printf("Canvas: \n");
+  print_canvas(&c);
+
+  print_path(&c);
 
   return 0;
 }

@@ -36,11 +36,10 @@ void queue_init(struct queue *q, int length){
 }
 
 
-void queue_push(struct queue *q, struct pixel p){
+void queue_push(struct queue *q, struct pixel *p){
     if(q->top >= q->length){
         q->top-=q->length;
     }
-    printf("%d, %d\n", q->top, q->bot);
     if(queue_is_full(q)){
         printf("Tried to push to a queue that is full!\n");
         abort();
@@ -49,12 +48,12 @@ void queue_push(struct queue *q, struct pixel p){
     q->top++;
 }
 
-struct pixel queue_pop(struct queue *q){
+struct pixel *queue_pop(struct queue *q){
     if(queue_is_empty(q)){
         printf("Tried to pop a queue that is empty!\n");
         abort();
     }
-    struct pixel p = q->queue_arr[q->bot];
+    struct pixel *p = q->queue_arr[q->bot];
     q->bot++;
     if(q->bot>=q->length){
         q->bot-=q->length;
