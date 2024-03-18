@@ -10,7 +10,7 @@ int depth_first_search(canvas *c);
 
 bool is_goal(canvas *c, int x, int y){
 
-    return (x == c->end_x && y == c->end_y);
+    return (x == c->end->x && y == c->end->y);
 
 }
 

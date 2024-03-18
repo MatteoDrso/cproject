@@ -1,91 +1,136 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
-#inlcude "canvas.h"
+#include "../canvas.h"
+#include "../data_structures.h"
 
-enum {
-	WEIGHT_PATH = 1;
-};
 
 // is copy of canvas as matrix, saves dist from start for each pixel
-static int **distanceMatrix;
-int copyMatrix(int *from[], int *to[]);
+static int *distance_matrix;
+static void init_dist_matrix(canvas *canvas);
+static int find_end(canvas *c, pixel *cP, min_Heap *h);
+static void get_path(canvas *canvas, pixel *current_pix, int *dist_matrix);
+static pixel *get_min_neighbour(canvas *c, pixel *cP, pixel **n, int *dm);
+static int get_dist(pixel *p1, pixel *p2);
+static int canvas_empty(canvas *c);
+
+int main(void){return 0;}// for compiling
 
 //int -1 failed, 0 when ok
-int dijkstra(canvas *c){
+int dijkstra(canvas *canvas){
 	
-	if(something){
-		return -1;//algorithm failed
+	int exit_var = -1;	
+	if(canvas_empty(canvas)){
+		return exit_var;//algorithm failed
 	}
-
-	// init canvas, start and end
-	pixel *start = at(canvas.canv, canvas.start_x, canvas.start_y);
-	start->visited = true;
+	//init distance matrix
+	init_dist_matrix(canvas);
 	
-	//init a currentPixel which points always to the Pixel which we are on
-	pixel *currentPixel = malloc(sizeof(pixel *currentPixel));
-	currentPixel = start;
+	canvas->start->status = 0;//may not be necessary	
+	min_Heap min_heap;
+	min_Heap_init(&min_heap, canvas->height*canvas->width);
+	min_Heap_insert(&min_heap, canvas->start, 0);
 
-	int cPX = canvas.start_x;  
-	int cPY = canvas.start_y; 
+	//init a current_pixel which points always to the Pixel which we are on
+	pixel *current_pixel = malloc(sizeof(pixel *));
 	
-	int found = 1;
-	while(found != 0){
-		found = step2(&canvas, currentPixel, &cPX, &cPY);	
+	int found = find_end(canvas, current_pixel, &min_heap);		
+	min_Heap_clear(&min_heap);//frees all allocated memory for this structure
+
+	if(found)
+	{
+		//go through distMatrix follow min path
+		get_path(canvas, current_pixel, distance_matrix);
+		exit_var = 0;
 	}
-
-	//go through distMatrix follow min path
-	return 0;
+	
+	free(current_pixel);
+	return exit_var;
 }
 
-int copyMatrix(int *from[], int *to[]){
-	for(int i=0; i<canvas.width; i++){
-		for(int j=0; j<canvas.height){
-			to[i][j] = from[i][j];	
-		}
-	}	
-}
-
-int step2(canvas *c, pixel *cP, min_Heap *h){
-	/*
-	start: cP = prioQueue.dequeue
-	1: counter += 1
-	2: cp.status = counter
-	3: if(cP.coords == end.coords){break;}
-	4: iterate through neighbours of cP
-		-> all with (n.status >= 0) in prioQueue
-		-> and their distMatrix val is cP`s+1 (cP.coords are known)
-	*/
+static int find_end(canvas *c, pixel *cP, min_Heap *h){
 	
-	static int pix_counter = 0;
-	pixel *neighbours[4];
+	int status_counter = -1;
+	int dist_to_start = 0;
+	pixel *n[4];
+	int found = 0;
+	int canv_size = c->height*c->width;
 
-	while(true){
+	for(int i=0; i<canv_size; i++){
 		cP = min_Heap_pop(h);
+		dist_to_start = get_dist(c->start, cP);//start.coords - cP.coords	
+		distance_matrix[cP->y * c->width + cP->y] = dist_to_start;
 	
-		//2:
-		cP->status = counter;
-	
-		//3:
-		if(cpX == c->end_x && cpY == c->end_y){
+		//neighbours of end not relevant, dist are
+		if(cP->status == -3){
+			found = 1;
 			break;
 		}
 
-		//4:
+		status_counter++;
+		cP->status = status_counter;
+	
 		//[north, east, south, west]	
-		neighbours(c, cP, neighbours);
+		neighbours(c, cP, n);
 	
 		for(int i=0; i<4; i++){
-			if(neighbours[i]->status == -1){
-				min_Heap_insert(h,cp,pix_counter++);
+			if(n[i]->status == UNVISITED){
+				distance_matrix[n[i]->y * c->width + n[i]->x] = dist_to_start+1;
+				min_Heap_insert(h, cP, dist_to_start+1);
 			}	
 		}
 	}	
+	
+	return found;
+}
 
+static void get_path(canvas *canvas, pixel *current_pix, int *dist_matrix){
+	int counter = 0;
+	pixel *n[4];
+	pixel *min_neighbour;
+
+	current_pix = canvas->end;
+
+	while(current_pix->status != 0){
+		min_neighbour = get_min_neighbour(canvas, current_pix, n, dist_matrix);    
+		canvas->path[counter] = min_neighbour;
+		current_pix = min_neighbour;
+	}
+}
+
+static pixel *get_min_neighbour(canvas *c, pixel *cP, pixel **n, int *dm){
+	neighbours(c, cP, n);
+	pixel *min_n = n[0];
+	for(int i=1; i<4; i++){
+		// this will return first node from [north, east, south, west] with smallest dist
+		if(dm[min_n->y * c->width + min_n->x] > dm[n[i]->y * c->width + n[i]->x]){
+			min_n = n[i];
+		}
+	}
+	return min_n;
+}
+
+static int canvas_empty(canvas *c){
+	if(c->start == NULL || c->end == NULL || c->canv == NULL){
+		return 1;
+	}
 	return 0;
 }
 
+static int get_dist(pixel *p1, pixel *p2){
+	unsigned int x_dist = p1->x - p2->x; 
+	unsigned int y_dist = p1->y - p2->y; 
+	return x_dist+y_dist;
+}
 
+static void init_dist_matrix(canvas *canvas){
+	int matrix_size =  canvas->height * canvas->width;	
+	distance_matrix = malloc(sizeof (int) * matrix_size);
+	for(int i=0; i<canvas->height; i++){
+		for(int j=0; j<canvas->width; j++){
+			distance_matrix[i * canvas->width + j] = 1024; //(int)pow(2,32)-1;
+		}
+	}
+}
 
 
 

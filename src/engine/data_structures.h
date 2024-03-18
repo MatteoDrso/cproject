@@ -41,6 +41,7 @@ void min_Heap_insert(struct min_Heap *h, pixel *p, int key);
 struct pixel stack_pop(struct stack *s);
 struct pixel queue_pop(struct queue *q);
 struct pixel *min_Heap_pop(struct min_Heap *h);
+void min_Heap_clear(min_Heap *h);
 
 static void swap(min_Heap *h, int index_parent, int index_child);
 static int get_parent(int index_node);
