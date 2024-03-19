@@ -53,19 +53,10 @@ int main(void) {
   }
 
 
-  canvas c = init_canvas(width,height, start_x, start_y, 1,1);
-  pixel *p1;
-  pixel *p2;
+  canvas c = init_canvas(width, height, start_x, start_y, 1,1);
+  print_canvas(&c);
 
-  p1 = at(&c, 0, 0);
-  p2 = at_offset(&c, 0);
-
-  if (p1 == p2) {
-    printf("Success!\n.");
-  } else {
-    printf("Something went wrong.\n");
-  }
-
+  depth_first_search(&c);
 
   return 0;
 }
