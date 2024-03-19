@@ -4,10 +4,6 @@
 #include "canvas.h"
 #include "data_structures.h"
 
-typedef struct parent_map{
-  pixel *parent;
-} parent_map;
-
 int breadth_first_search(canvas *c){
   queue q;
   queue_init(&q, (c->width * c-> height));
