@@ -7,7 +7,7 @@
 
 void stack_init(struct stack *s, int length){
     s->length = length;
-    s->stack_arr = malloc(s->length * sizeof(struct pixel));//__intptr_t
+    s->stack_arr = malloc(s->length * sizeof(__intptr_t));
     s->top = 0;
 }
 
