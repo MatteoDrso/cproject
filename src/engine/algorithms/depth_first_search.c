@@ -17,6 +17,7 @@ int depth_first_search(canvas *c){
 
   while(!stack_is_empty(&s) && !found){
     p = stack_pop(&s);
+    printf("At: %d, %d\n", p->x, p->y);
     if (p->status == END) {
       found = true;
       continue;
@@ -30,6 +31,11 @@ int depth_first_search(canvas *c){
 
   if(found){
     printf("Found goal at %d, %d\n", p->x, p->y);
+ /*   int counter = 0;
+    do{
+      c->path[counter] = p;
+      p = p->parent;
+    } while(p->parent!=NULL);*/
   } else {
     printf("Goal unreachable\n");
   }
@@ -45,18 +51,12 @@ static int step(canvas *c, struct stack *s, pixel *p){
         temp = n[i];
         if(is(temp, UNVISITED)){
             temp->status = p->status + 1;
+            printf("N[%d] %d, %d\n", i, temp->x, temp->y);
+            temp->parent = p;
             stack_push(s, temp);
         } else if (is(temp, END)){
+          temp->parent = p;
             stack_push(s, temp);
         }
     } 
-}
-
-
-int main(void){
-
-  canvas c = init_canvas(20, 20, 1, 18, 18, 1);
-  print_canvas(&c);
-  depth_first_search(&c);
-
 }
