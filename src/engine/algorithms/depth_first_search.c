@@ -51,12 +51,3 @@ static int step(canvas *c, struct stack *s, pixel *p){
         }
     } 
 }
-
-
-int main(void){
-
-  canvas c = init_canvas(20, 20, 1, 18, 18, 1);
-  print_canvas(&c);
-  depth_first_search(&c);
-
-}
