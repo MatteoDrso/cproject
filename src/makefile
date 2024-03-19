@@ -2,7 +2,7 @@ objects = main.o engine/canvas.o engine/data_structures.o engine/algorithms/brea
 
 includes = -I./engine -I./engine/algorithms
 
-CFLAGS= -std=c99 -Wall -Wextra -pedantic $(includes) -lm
+CFLAGS= -std=c99 -g -O0 -Wall -Wextra -pedantic $(includes) -lm
 
 all: main
 
