@@ -12,7 +12,7 @@ typedef struct stack {
 
 typedef struct queue {
 
-    struct pixel *queue_arr;
+    struct pixel **queue_arr; // Should be an array of pointers to pixel
     int length; //has to be initialized to the number of pixel in the canvas (width * height)
     int top, bot;
 
@@ -35,12 +35,14 @@ typedef struct min_Heap {
 void stack_init(struct stack *s, int length);
 void queue_init(struct queue *q, int length);
 void min_Heap_init(struct min_Heap *h, int size);
+
 void stack_push(struct stack *s, struct pixel *p);
-void queue_push(struct queue *q, struct pixel p);
+void queue_push(struct queue *q, struct pixel *p);
 void min_Heap_insert(struct min_Heap *h, pixel *p, int key);
 struct pixel *stack_pop(struct stack *s);
-struct pixel queue_pop(struct queue *q);
+struct pixel *queue_pop(struct queue *q);
 struct pixel *min_Heap_pop(struct min_Heap *h);
+void min_Heap_clear(min_Heap *h);
 
 static void swap(min_Heap *h, int index_parent, int index_child);
 static int get_parent(int index_node);
