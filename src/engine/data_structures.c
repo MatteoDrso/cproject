@@ -3,9 +3,11 @@
 #include "canvas.h"
 #include "data_structures.h"
 
+
+
 void stack_init(struct stack *s, int length){
     s->length = length;
-    s->stack_arr = malloc(s->length * sizeof(__intptr_t));
+    s->stack_arr = malloc(s->length * sizeof(struct pixel));//__intptr_t
     s->top = 0;
 }
 
@@ -61,88 +63,96 @@ struct pixel *queue_pop(struct queue *q){
     return p;
 }
 
+
 void min_Heap_init(struct min_Heap *h, int size){
     h->size = size;
-    h->min_Heap_arr = malloc(h->size * sizeof(node *));//min_Heap_arr is **
-    h->bot = 0;
-    h->top = 0;
+    h->min_Heap_arr = calloc(h->size, sizeof(struct node));//min_Heap_arr is **
+    h->len = 0;
 }
 
 void min_Heap_insert(struct min_Heap *h, pixel *value, int key){
-    if(h->bot == h->size){
+    if(h->len == h->size){
         printf("Tried to push to a full heap!\n");
         return;
     }
-    node *n = malloc(sizeof(struct node));
-    n->key = key;
-    n->value = value;
+    //printf("inserted pixel x: %d, y: %d\n", value->x, value->y);
+    node n;
+    n.key = key;
+    n.value = value;
+    h->len++;
+    h->min_Heap_arr[h->len-1] = n;
 
-    h->min_Heap_arr[h->bot] = n;
-    bubble_up(h, n);
-    h->bot++;
+    bubble_up(h, &(h->min_Heap_arr[h->len-1]));
+    //printHeap(h);
 }
 
 struct pixel *min_Heap_pop(struct min_Heap *h){
-     if(h->bot == 0){
-        printf("Tried to push to a full heap!\n");
+     if(h->len == 0){
+        printf("Tried to pop from empty heap!\n");
         abort();
     }
-    pixel *p = h->min_Heap_arr[h->top]->value;
-    free(h->min_Heap_arr[h->top]);
-    h->min_Heap_arr[h->top] = h->min_Heap_arr[h->bot]; 
+    pixel *p = h->min_Heap_arr[0].value;
+    h->min_Heap_arr[0] = h->min_Heap_arr[h->len-1]; 
     // then bubble new root down
-    bubble_down(h, h->min_Heap_arr[h->top]);
-    h->bot--;
-    return p; 
+
+    bubble_down(h); 
+
+    h->len--;
+    //printHeap(h);
+    return p;
 }
 
-void min_Heap_clear(min_Heap *h){
-    int counter = 0;
-    while(h->min_Heap_arr[counter] != NULL){
-        free(h->min_Heap_arr[counter]);
-    }
+void min_Heap_clear(min_Heap *h){ 
     free(h->min_Heap_arr);
 }
 
 //helper functions for heap
 static void bubble_up(min_Heap *h, node *n){
-    int idx_parent = h->bot;
-    node *parent = h->min_Heap_arr[idx_parent];
+    int idx_parent = get_parent(h->len-1);
+    node *parent = &(h->min_Heap_arr[idx_parent]);
     int idx_child = idx_parent;
+    //printf("bubble_up before loop\n");
     while(n->key < parent->key){
         swap(h, idx_parent, idx_child);   
         idx_child = idx_parent; 
         idx_parent = get_parent(idx_child);
-        parent = h->min_Heap_arr[idx_parent];
+        parent = &(h->min_Heap_arr[idx_parent]);
     }
+    //    printf("bubble_up after loop, top_value_x : %d, top_value_y : %d\n", h->min_Heap_arr[0].value->x, h->min_Heap_arr[0].value->y);
+    //printf("idx_parent: %d\n", idx_parent);
 }
 
-static void bubble_down(min_Heap *h, node *n){
+static void bubble_down(min_Heap *h){//rm node *n
     int idx_parent = 0; 
     int idx_child = 0;
+    //printf("bubble_down before loop\n");
     while(1){
         idx_child = get_smallest_child(h, idx_parent);
-        if(idx_child == idx_parent){
+        //printf("idx_child: %d, idx_parent: %d\n", idx_child, idx_parent);
+        if(h->min_Heap_arr[idx_parent].key <= h->min_Heap_arr[idx_child].key){
             break;
         }
         swap(h, idx_parent, idx_child);   
         idx_parent = idx_child;
     }
+    //printf("bubble_down after loop\n");
 }
 
 static int get_smallest_child(min_Heap *h, int index_node){
-    node *leftChild = h->min_Heap_arr[2*index_node+1];
-    node *rightChild = h->min_Heap_arr[2*index_node+2];
-    node *parent = h->min_Heap_arr[index_node];
-    //if [north,east,south,west] should be mantained then <=-> < 
-    if((parent->key <= leftChild->key) && (parent->key <= rightChild->key)){
-        return index_node;
+    if(2*index_node+1 >= h->len){
+            return index_node;
     }
+    node *leftChild = &(h->min_Heap_arr[2*index_node+1]);
 
+    if(2*index_node+2 >= h->len){
+        return (2*index_node+1);
+    }
+    node *rightChild = &(h->min_Heap_arr[2*index_node+2]);
+    //printf("leftChild.key: %d, rightChild.key: %d", leftChild->key, rightChild->key);
     if(rightChild->key < leftChild->key){
         return (2*index_node+2);
     }
-    return (2*index_node+1);
+        return (2*index_node+1);
 }
 
 static int get_parent(int index_node){
@@ -150,10 +160,20 @@ static int get_parent(int index_node){
 }
 
 static void swap(min_Heap *h, int index_parent, int index_child){
-    node *temp = h->min_Heap_arr[index_parent];
+    node temp = h->min_Heap_arr[index_parent];
     h->min_Heap_arr[index_parent] = h->min_Heap_arr[index_child];
     h->min_Heap_arr[index_child] = temp;
 }
 
+static void printHeap(min_Heap *h){
+    int i = 0;
+    puts("printing current heap: ");
+    printf("len: %d, last node: key: %d, valueX: %d, valueY: %d\n", h->len);//, h->min_Heap_arr[h->len-1].key, h->min_Heap_arr[h->len-1].value->x, h->min_Heap_arr[h->len-1].value->y);
+    while (i < h->len) {
+        printf("node %d, key: %d, value: x:%d y:%d\n", i, h->min_Heap_arr[i].key, h->min_Heap_arr[i].value->x, h->min_Heap_arr[i].value->y);
+        i++;
+    }
+    puts("done");
+}
 
 

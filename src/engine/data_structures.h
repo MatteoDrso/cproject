@@ -25,9 +25,9 @@ typedef struct node{
 
 typedef struct min_Heap {
 
-    node **min_Heap_arr;
+    node *min_Heap_arr;
     int size; //has to be initialized to the number of pixel in the canvas (width * height)
-    int top, bot;
+    int len;
 
 }min_Heap;
 
@@ -48,7 +48,8 @@ static void swap(min_Heap *h, int index_parent, int index_child);
 static int get_parent(int index_node);
 static int get_smallest_child(min_Heap *h, int index_node); 
 static void bubble_up(min_Heap *h, node *n);
-static void bubble_down(min_Heap *h, node *n);
+static void bubble_down(min_Heap *h);
+static void printHeap(min_Heap *h);
 
 static inline bool stack_is_empty(stack *s){
     return s->top<=0;

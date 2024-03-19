@@ -29,12 +29,15 @@ int dijkstra(canvas *canvas){
 	canvas->start->status = 0;//may not be necessary	
 	min_Heap min_heap;
 	min_Heap_init(&min_heap, canvas->height*canvas->width);
+	//puts("insert call: ");
 	min_Heap_insert(&min_heap, canvas->start, 0);
+	//puts("");
 
 	//init a current_pixel which points always to the Pixel which we are on
 	pixel *current_pixel = malloc(sizeof(pixel *));
 	
 	int found = find_end(canvas, current_pixel, &min_heap);		
+	//puts("after find_end");
 	min_Heap_clear(&min_heap);//frees all allocated memory for this structure
 
 	if(found)
@@ -50,33 +53,44 @@ int dijkstra(canvas *canvas){
 
 static int find_end(canvas *c, pixel *cP, min_Heap *h){
 	
-	int status_counter = -1;
+	int status_counter = 0;
 	int dist_to_start = 0;
 	pixel *n[4];
 	int found = 0;
 	int canv_size = c->height*c->width;
 
 	for(int i=0; i<canv_size; i++){
+		//printf("new round: \n\n");
+		//puts("pop call: ");
 		cP = min_Heap_pop(h);
+		//puts("");
 		dist_to_start = get_dist(c->start, cP);//start.coords - cP.coords	
-		distance_matrix[cP->y * c->width + cP->y] = dist_to_start;
-	
+		//printf("dist_to_start: %d\n", dist_to_start);
+		distance_matrix[cP->y * c->width + cP->x] = dist_to_start;
 		//neighbours of end not relevant, dist are
+
 		if(cP->status == -3){
+			//puts("in break if statemant");
+			//printf("cP_X : %d, cP_Y : %d, cP_status : %d\n", cP->x, cP->y, cP->status);
 			found = 1;
 			break;
 		}
 
-		status_counter++;
-		cP->status = status_counter;
-	
+		//printf("cP_X : %d, cP_Y : %d, cP_status : %d\n", cP->x, cP->y, cP->status);
 		//[north, east, south, west]	
 		neighbours(c, cP, n);
 	
 		for(int i=0; i<4; i++){
-			if(n[i]->status == UNVISITED){
+			if(n[i]->status == UNVISITED || n[i]->status == END){
+				status_counter++;
+				if(n[i]->status != END){
+					n[i]->status = status_counter;
+				}
 				distance_matrix[n[i]->y * c->width + n[i]->x] = dist_to_start+1;
-				min_Heap_insert(h, cP, dist_to_start+1);
+				//printf("dist_to_start inserted : %d\n", dist_to_start+1);
+				//puts("insert call: ");	
+				min_Heap_insert(h, n[i], dist_to_start+1);
+				//puts("");
 			}	
 		}
 	}	
@@ -91,11 +105,14 @@ static void get_path(canvas *canvas, pixel *current_pix, int *dist_matrix){
 
 	current_pix = canvas->end;
 
+	//printf("get_path before loop\n");
 	while(current_pix->status != 0){
 		min_neighbour = get_min_neighbour(canvas, current_pix, n, dist_matrix);    
 		canvas->path[counter] = min_neighbour;
+	//	printf("x: %d, y: %d\n", canvas->path[counter]->x, canvas->path[counter]->y);
 		current_pix = min_neighbour;
 	}
+	//printf("get_path after loop\n");
 }
 
 static pixel *get_min_neighbour(canvas *c, pixel *cP, pixel **n, int *dm){
@@ -118,8 +135,8 @@ static int canvas_empty(canvas *c){
 }
 
 static int get_dist(pixel *p1, pixel *p2){
-	unsigned int x_dist = p1->x - p2->x; 
-	unsigned int y_dist = p1->y - p2->y; 
+	int x_dist = abs(p1->x - p2->x); 
+	int y_dist = abs(p1->y - p2->y); 
 	return x_dist+y_dist;
 }
 
@@ -132,7 +149,6 @@ static void init_dist_matrix(canvas *canvas){
 		}
 	}
 }
-
 
 
 
