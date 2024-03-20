@@ -71,5 +71,7 @@ int main(void) {
 
   print_path(&c);
 
+  free_canvas(&c);
+
   return 0;
 }
