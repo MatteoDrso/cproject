@@ -17,7 +17,7 @@ canvas init_canvas(int width, int height, int start_x, int start_y, int end_x, i
       p.x = j;
       p.y = i;
       if(i == 0 || j == 0 || i == height-1 || j == width-1) {
-        p.status = WALL;
+        p.status = WALL; 
       } else {
         p.status = UNVISITED;
       }
@@ -68,7 +68,7 @@ void print_canvas(canvas *c){
         default:
           if(p->status > 0){
             printf("x ");
-          } else {
+           } else {
             printf("? ");
           }
       }
@@ -86,4 +86,22 @@ void neighbours(canvas *c, pixel *current_pixel, struct pixel **n){
   n[EAST] = at(c, x+1, y);
   n[SOUTH] = at(c, x, y+1);
   n[WEST] = at(c, x-1, y);
+}
+
+
+// Print the path using path variable
+void print_path(canvas *c) {
+  printf("Path: \n");
+  int i = 0;
+  while ( i < (c->width * c->height))  {
+    if (c->path[i]->status != START) {
+      printf("(%d,%d) <-- ", c->path[i]->x, c->path[i]->y);
+      i++;
+    } else {
+      break;
+    }
+  
+  }
+  
+  printf("(%d,%d) \n", c->path[i]->x, c->path[i]->y);
 }
