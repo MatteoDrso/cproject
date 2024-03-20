@@ -13,7 +13,7 @@ static void get_path(canvas *canvas, pixel *current_pix, int *dist_matrix);
 static pixel *get_min_neighbour(canvas *c, pixel *cP, pixel **n, int *dm);
 static int get_dist(pixel *p1, pixel *p2);
 static int canvas_empty(canvas *c);
-static int heuristic(canvas *c);
+static int heuristic(canvas *c, pixel *cP);
 
 //int -1 failed, 0 when ok
 int a_star(canvas *canvas){
@@ -31,7 +31,7 @@ int a_star(canvas *canvas){
 	min_Heap_insert(&min_heap, canvas->start, 0);
 
 	//init a current_pixel which points always to the Pixel which we are on
-	pixel *current_pixel = malloc(sizeof(pixel *));
+	pixel *current_pixel;//= malloc(sizeof(pixel *));
 	
 	int found = find_end(canvas, current_pixel, &min_heap);		
 	min_Heap_clear(&min_heap);//frees all allocated memory for this structure
@@ -43,7 +43,7 @@ int a_star(canvas *canvas){
 		exit_var = 0;
 	}
 	
-	free(current_pixel);
+	//free(current_pixel);
 	return exit_var;
 }
 
@@ -60,7 +60,7 @@ static int find_end(canvas *c, pixel *cP, min_Heap *h){
 		//puts("pop call: ");
 		cP = min_Heap_pop(h);
 		//puts("");
-		dist_to_start = get_dist(c->start, cP);//start.coords - cP.coords	
+		dist_to_start = get_dist(c->end, cP);//start.coords - cP.coords	
 		//printf("dist_to_start: %d\n", dist_to_start);
 		distance_matrix[cP->y * c->width + cP->x] = dist_to_start;
 		//neighbours of end not relevant, dist are
@@ -82,9 +82,10 @@ static int find_end(canvas *c, pixel *cP, min_Heap *h){
 				if(n[i]->status != END){
 					n[i]->status = status_counter;
 				}
-				distance_matrix[n[i]->y * c->width + n[i]->x] = dist_to_start+1;
-				int h = heuristic(c);
-				min_Heap_insert(h, n[i], dist_to_start+h);
+
+				dist_to_start = get_dist(c->end, n[i]);
+				distance_matrix[n[i]->y * c->width + n[i]->x] = dist_to_start;
+				min_Heap_insert(h, n[i], h);
 				//puts("");
 			}	
 		}
@@ -93,10 +94,6 @@ static int find_end(canvas *c, pixel *cP, min_Heap *h){
 	return found;
 }
 
-static int heuristic(canvas *c){
-
-	
-}
 
 static void get_path(canvas *canvas, pixel *current_pix, int *dist_matrix){
 	int counter = 1;

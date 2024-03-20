@@ -34,7 +34,7 @@ int dijkstra(canvas *canvas){
 	//puts("");
 
 	//init a current_pixel which points always to the Pixel which we are on
-	pixel *current_pixel = malloc(sizeof(pixel *));
+	pixel *current_pixel;
 	
 	int found = find_end(canvas, current_pixel, &min_heap);		
 	//puts("after find_end");
@@ -47,7 +47,6 @@ int dijkstra(canvas *canvas){
 		exit_var = 0;
 	}
 	
-	free(current_pixel);
 	return exit_var;
 }
 
