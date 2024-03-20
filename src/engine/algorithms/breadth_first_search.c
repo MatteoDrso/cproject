@@ -29,7 +29,6 @@ int breadth_first_search(canvas *c){
       }
       c->path[i] = p; 
 
-      free(q.queue_arr);
       // Success, path found and stored in c->path
       free(q.queue_arr);
       return 0;
