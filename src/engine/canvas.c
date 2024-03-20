@@ -105,3 +105,9 @@ void print_path(canvas *c) {
   
   printf("(%d,%d) \n", c->path[i]->x, c->path[i]->y);
 }
+
+// Free memory allocated by init_canvas
+void free_canvas(canvas *c) {
+  free(c->path);
+  free(c->canv);
+}

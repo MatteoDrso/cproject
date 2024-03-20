@@ -41,6 +41,7 @@ canvas init_canvas(int width, int height, int start_x, int start_y, int end_x, i
 void print_canvas(canvas *c);
 void neighbours(canvas *c, pixel *current_pixel, struct pixel **n);
 void print_path(canvas *c);
+void free_canvas(canvas *c);
 
 enum directions {
     NORTH = 0,
