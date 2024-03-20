@@ -100,6 +100,11 @@ int main(void) {
 
   draw_path_on_canvas(&c);
 
+  failed = canv_to_file(&c, "found_canv.txt");
+  if (failed) {
+    printf("canv_to_file failed. Errorcode: %d", failed);
+  }
+
   printf("Canvas: \n");
   print_canvas(&c);
 
