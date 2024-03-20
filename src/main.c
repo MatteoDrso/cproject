@@ -54,7 +54,9 @@ int main(void) {
 
 
   canvas c = init_canvas(width,height, start_x, start_y, 1,1);
-//canvas c == read_from_file();
+
+  int err = canv_to_file(&c, "init_canv.txt");
+
   printf("Canvas: \n");
   print_canvas(&c);
 
@@ -104,6 +106,7 @@ int main(void) {
   print_canvas(&c);
 
   print_path(&c);
+  err = canv_to_file(&c, "final_canv.txt");
 
   free_canvas(&c);
 

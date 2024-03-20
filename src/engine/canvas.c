@@ -80,6 +80,54 @@ void print_canvas(canvas *c){
   }
 }
 
+int canv_to_file(canvas *c, const char *restrict target_path) {
+  // char *char_array[7] = {"S", "#", " ", "E", "@", "-", "?"};
+
+  FILE *fp = fopen(target_path, "w");
+  if (!fp) {
+    perror("fopen");
+    return EXIT_FAILURE;
+  }
+
+  pixel *p;
+
+  for (int i = 0; i < c->height; i++) {
+    for (int j = 0; j < c->width; j++) {
+      p = at(c, j, i);
+      switch (p->status) {
+        case START:
+          fprintf(fp, "S ");
+          break;
+        case WALL:  
+          fprintf(fp, "# ");
+          break;
+        case UNVISITED:
+          fprintf(fp, "  ");
+          break;
+        case END:
+          fprintf(fp, "E ");
+          break;
+        case PATH:
+          fprintf(fp, "@ ");
+          break;
+        default:
+          if(p->status > 0){
+            fprintf(fp, "- ");
+           } else {
+            fprintf(fp, "? ");
+          }
+      }
+    }
+
+    fprintf(fp, "\n");
+    }
+
+  fclose(fp);
+
+  // Success
+  return 0;
+}
+
 // Returns Pixels in order: North, East, South, West
 void neighbours(canvas *c, pixel *current_pixel, struct pixel **n){
   int x = current_pixel->x;
