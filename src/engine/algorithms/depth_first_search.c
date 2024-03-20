@@ -17,7 +17,6 @@ int depth_first_search(canvas *c){
 
   while(!stack_is_empty(&s) && !found){
     p = stack_pop(&s);
-    printf("At: %d, %d\n", p->x, p->y);
     if (is(p, END)) {
       found = true;
       continue;
@@ -53,7 +52,6 @@ static int step(canvas *c, struct stack *s, pixel *p){
         temp = n[i];
         if(is(temp, UNVISITED)){
             temp->status = p->status + 1;
-            printf("N[%d] %d, %d\n", i, temp->x, temp->y);
             temp->parent = p;
             stack_push(s, temp);
         } else if (is(temp, END)){
