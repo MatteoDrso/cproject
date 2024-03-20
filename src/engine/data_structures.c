@@ -33,6 +33,9 @@ struct pixel *stack_pop(struct stack *s){
 void queue_init(struct queue *q, int length){
     q->length = length;
     q->queue_arr = malloc(q->length * sizeof(struct pixel));
+    //for (int i = 0; i < length; i++) {
+    //  q->queue_arr[i] = malloc(sizeof(struct pixel)); 
+    //}
     q->bot = 0;
     q->top = 0;
 }

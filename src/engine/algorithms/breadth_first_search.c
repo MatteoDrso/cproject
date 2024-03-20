@@ -29,8 +29,8 @@ int breadth_first_search(canvas *c){
       }
       c->path[i] = p; 
 
-      // Success, path found and stored in c->path
       free(q.queue_arr);
+      // Success, path found and stored in c->path
       return 0;
     }
 
@@ -64,13 +64,3 @@ int breadth_first_search(canvas *c){
   free(q.queue_arr);
   return 1;
 }
-
-/*
-########
-#3
-#23E
-#123
-#0123
-#########
-
-*/

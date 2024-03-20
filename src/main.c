@@ -66,6 +66,8 @@ int main(void) {
     printf("BFS succeeded!\n");
   } 
 
+  draw_path_on_canvas(&c);
+
   printf("Canvas: \n");
   print_canvas(&c);
 
