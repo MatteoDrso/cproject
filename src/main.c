@@ -54,17 +54,51 @@ int main(void) {
 
 
   canvas c = init_canvas(width,height, start_x, start_y, 1,1);
-
+//canvas c == read_from_file();
   printf("Canvas: \n");
   print_canvas(&c);
 
-  int failed = breadth_first_search(&c);
+  int algorithm = 0;
+  puts("What Algorithm do you want to see? \n1 -> BFS\n2 -> DFS\n3 -> Dijkstra");//\n4 -> A*
+  printf("Algorithm: ");
+  while(scanf("%d", &algorithm), algorithm < 0 || algorithm > 3)
+  {
+    //clear input buffer
+    while (getchar() != '\n');
 
-  if (failed) {
-    printf("BFS failed!\n");
-  } else {
-    printf("BFS succeeded!\n");
-  } 
+    printf("Invalid input. Please enter a number from one of the algorithms above.\n");
+    printf("Algorithm: ");
+  }
+  
+  int failed = 1;
+
+  switch(algorithm){
+    case 1: failed = breadth_first_search(&c);
+            if (failed) {
+              printf("BFS failed!\n");
+            } else {
+              printf("BFS succeeded!\n");
+            }
+            break;
+    case 2: failed = depth_first_search(&c);
+            if (failed) {
+              printf("DFS failed!\n");
+            } else {
+              printf("DFS succeeded!\n");
+            }
+            break;
+    case 3: failed = dijkstra(&c);
+            if (failed) {
+              printf("Dijkstra failed!\n");
+            } else {
+              printf("Dijkstra succeeded!\n");
+            }
+            break;
+   default: puts("How did you get here?");
+            break;
+  }
+
+  draw_path_on_canvas(&c);
 
   printf("Canvas: \n");
   print_canvas(&c);

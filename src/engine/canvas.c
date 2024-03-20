@@ -65,9 +65,12 @@ void print_canvas(canvas *c){
         case END:
           printf("E ");
           break;
+        case PATH:
+          printf("@ ");
+          break;
         default:
           if(p->status > 0){
-            printf("x ");
+            printf("- ");
            } else {
             printf("? ");
           }
@@ -88,6 +91,18 @@ void neighbours(canvas *c, pixel *current_pixel, struct pixel **n){
   n[WEST] = at(c, x-1, y);
 }
 
+// Updates the status of the pixels building the path to PATH
+void draw_path_on_canvas (canvas *c) {
+  int i = 1;
+  while (i < (c->width * c->height)) {
+    if (c->path[i]->status != START) {
+      c->path[i]->status = PATH;
+      i++;
+    } else {
+      break;
+    }
+  }
+}
 
 // Print the path using path variable
 void print_path(canvas *c) {

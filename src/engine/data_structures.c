@@ -7,7 +7,7 @@
 
 void stack_init(struct stack *s, int length){
     s->length = length;
-    s->stack_arr = malloc(s->length * sizeof(__intptr_t));
+    s->stack_arr = malloc(s->length * sizeof(uintptr_t));
     s->top = 0;
 }
 
@@ -33,6 +33,9 @@ struct pixel *stack_pop(struct stack *s){
 void queue_init(struct queue *q, int length){
     q->length = length;
     q->queue_arr = malloc(q->length * sizeof(struct pixel));
+    //for (int i = 0; i < length; i++) {
+    //  q->queue_arr[i] = malloc(sizeof(struct pixel)); 
+    //}
     q->bot = 0;
     q->top = 0;
 }

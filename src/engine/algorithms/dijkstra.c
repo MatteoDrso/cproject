@@ -99,18 +99,19 @@ static int find_end(canvas *c, pixel *cP, min_Heap *h){
 }
 
 static void get_path(canvas *canvas, pixel *current_pix, int *dist_matrix){
-	int counter = 0;
+	int counter = 1;
 	pixel *n[4];
 	pixel *min_neighbour;
 
 	current_pix = canvas->end;
-
+	canvas->path[0] = current_pix;
 	//printf("get_path before loop\n");
-	while(current_pix->status != 0){
+	while(current_pix->status != START){
 		min_neighbour = get_min_neighbour(canvas, current_pix, n, dist_matrix);    
 		canvas->path[counter] = min_neighbour;
 	//	printf("x: %d, y: %d\n", canvas->path[counter]->x, canvas->path[counter]->y);
 		current_pix = min_neighbour;
+		counter++;
 	}
 	//printf("get_path after loop\n");
 }
