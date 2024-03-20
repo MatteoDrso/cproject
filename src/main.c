@@ -57,6 +57,9 @@ int main(void) {
   print_canvas(&c);
 
   depth_first_search(&c);
+  print_path(&c);
+
+  print_canvas(&c);
 
   return 0;
 }
