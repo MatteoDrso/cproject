@@ -63,7 +63,7 @@ int main(void) {
   int algorithm = 0;
   puts("What Algorithm do you want to see? \n1 -> BFS\n2 -> DFS\n3 -> Dijkstra");//\n4 -> A*
   printf("Algorithm: ");
-  while(scanf("%d", &algorithm), algorithm < 0 || algorithm > 3)
+  while(scanf("%d", &algorithm), algorithm < 0 || algorithm > 3)
   {
     //clear input buffer
     while (getchar() != '\n');

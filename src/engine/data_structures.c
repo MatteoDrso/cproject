@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdint.h>
 #include "canvas.h"
 #include "data_structures.h"
 
@@ -7,7 +8,7 @@
 
 void stack_init(struct stack *s, int length){
     s->length = length;
-    s->stack_arr = malloc(s->length * sizeof(uintptr_t));
+    s->stack_arr = malloc(s->length * sizeof(intptr_t));
     s->top = 0;
 }
 
