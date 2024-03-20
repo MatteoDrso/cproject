@@ -54,14 +54,14 @@ int main(void) {
 
 
   canvas c = init_canvas(width,height, start_x, start_y, 1,1);
-//canvas c == read_from_file();
+
   printf("Canvas: \n");
   print_canvas(&c);
 
   int algorithm = 0;
   puts("What Algorithm do you want to see? \n1 -> BFS\n2 -> DFS\n3 -> Dijkstra");//\n4 -> A*
   printf("Algorithm: ");
-  while(scanf("%d", &algorithm), algorithm < 0 || algorithm > 3)
+  while(scanf("%d", &algorithm), algorithm < 0 || algorithm > 3)
   {
     //clear input buffer
     while (getchar() != '\n');
@@ -99,6 +99,11 @@ int main(void) {
   }
 
   draw_path_on_canvas(&c);
+
+  failed = canv_to_file(&c, "found_canv.txt");
+  if (failed) {
+    printf("canv_to_file failed. Errorcode: %d", failed);
+  }
 
   printf("Canvas: \n");
   print_canvas(&c);

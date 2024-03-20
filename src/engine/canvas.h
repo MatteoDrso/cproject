@@ -44,6 +44,8 @@ void print_path(canvas *c);
 void draw_path_on_canvas(canvas *c);
 void free_canvas(canvas *c);
 
+int canvas_to_file(canvas *c, const char *restrict target_path);
+
 enum directions {
     NORTH = 0,
     EAST = 1,
