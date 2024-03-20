@@ -59,10 +59,9 @@ int main(void) {
   print_canvas(&c);
 
   int algorithm = 0;
-  puts("What Algorithm do you want to see? \n1 -> BFS\n2 -> DFS\n3 -> Dijkstra");//\n4 -> A*
+  puts("What Algorithm do you want to see? \n1 -> BFS\n2 -> DFS\n3 -> Dijkstra\n4 -> A*");//\n4 -> A*
   printf("Algorithm: ");
-  while(scanf("%d", &algorithm), algorithm < 0 || algorithm > 3)
-  {
+  while(scanf("%d", &algorithm), algorithm < 0 || algorithm > 3){
     //clear input buffer
     while (getchar() != '\n');
 
@@ -92,6 +91,13 @@ int main(void) {
               printf("Dijkstra failed!\n");
             } else {
               printf("Dijkstra succeeded!\n");
+            }
+            break;
+    case 4: failed = a_star(&c);
+            if (failed) {
+              printf("A* failed!\n");
+            } else {
+              printf("A* succeeded!\n");
             }
             break;
    default: puts("How did you get here?");

@@ -47,7 +47,6 @@ int dijkstra(canvas *canvas){
 		exit_var = 0;
 	}
 	
-	
 	return exit_var;
 }
 
