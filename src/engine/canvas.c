@@ -78,7 +78,6 @@ void print_canvas(canvas *c){
     }
     printf("\n");
   }
-
 }
 
 // Returns Pixels in order: North, East, South, West
