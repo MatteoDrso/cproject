@@ -82,9 +82,9 @@ void print_canvas(canvas *c){
 void neighbours(canvas *c, pixel *current_pixel, struct pixel **n){
   int x = current_pixel->x;
   int y = current_pixel->y;
-  n[NORTH] = at(c, x, y+1);
+  n[NORTH] = at(c, x, y-1);
   n[EAST] = at(c, x+1, y);
-  n[SOUTH] = at(c, x, y-1);
+  n[SOUTH] = at(c, x, y+1);
   n[WEST] = at(c, x-1, y);
 }
 
