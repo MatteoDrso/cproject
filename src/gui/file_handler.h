@@ -1,3 +1,8 @@
+#ifndef PATHFIND_FILE_HANDLER_H
+#define PATHFIND_FILE_HANDLER_H
+
+#include "../engine/canvas.h"
+
 enum {
     MAX_CANVAS_WIDTH_EXCEEDED = -1,
     MAX_CANVAS_HEIGHT_EXCEEDED = -2,
@@ -12,3 +17,8 @@ enum {
     CANVAS_FILE_READ_REALLOC_FAILURE = -31,
     CANVAS_PIXEL_ARRAY_MEMCPY_FAILURE = -32,
 };
+
+int write_canvas_to_file(char *file_name, canvas *c);
+int read_canvas_from_file(char *file_name, canvas *return_canvas);
+
+#endif

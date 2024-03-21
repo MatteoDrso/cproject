@@ -15,7 +15,7 @@ int read_canvas_from_file(char *file_name, canvas *return_canvas){
     FILE *f = fopen(file_name, "r");
     if (f == NULL) {
         perror(file_name);
-        return -1;
+        return -100;
     }
 
     int c;
@@ -58,7 +58,10 @@ int read_canvas_from_file(char *file_name, canvas *return_canvas){
     bool map_read = false;
     int start_x, start_y, end_x, end_y;
 
-    new_pixel_canvas = reallocarray(new_pixel_canvas, width*(height_counter+1), sizeof(pixel));
+    new_pixel_canvas = realloc(new_pixel_canvas, width*(height_counter+1) * sizeof(pixel));
+    if(new_pixel_canvas == NULL){
+        return CANVAS_FILE_READ_REALLOC_FAILURE;
+    }
 
     while(!map_read){
         c = fgetc(f);
@@ -107,7 +110,7 @@ int read_canvas_from_file(char *file_name, canvas *return_canvas){
                     ungetc(c, f);
                     c = '\n';
                     last_row_border = true;
-                    new_pixel_canvas = reallocarray(new_pixel_canvas, width*(height_counter+1), sizeof(pixel));
+                    new_pixel_canvas = realloc(new_pixel_canvas, width*(height_counter+1) * sizeof(pixel));
                     if(new_pixel_canvas == NULL) return CANVAS_FILE_READ_REALLOC_FAILURE;
                     width_counter=0;
                 }
@@ -124,21 +127,6 @@ int read_canvas_from_file(char *file_name, canvas *return_canvas){
 
     }
 
-    /*
-    for(;;){
-        bits_read = getline(temp, width+1, f);
-        if(bits_read == 1 && temp[0] == '\n'){
-            height = counter;
-            break;
-        }
-        if(bits_read-1 != width || temp[width-1]!='\n') return INCONSISTENT_CANVAS_SIZE;
-
-        new_canv = reallocarray(new_canv, width, sizeof(pixel));
-        if(new_canv == NULL) return CANVAS_FILE_READ_REALLOC_FAILURE;
-        for(int i = 0; i < width-1; i++) new_canv[counter*width+i] = temp[i];
-        counter++;
-
-    }*/
     *return_canvas = init_canvas(width, height, start_x, start_y, end_x, end_y);
     pixel *return_val = memcpy(return_canvas->canv, new_pixel_canvas, height*width*sizeof(pixel));
     if(return_val == NULL){
@@ -148,20 +136,69 @@ int read_canvas_from_file(char *file_name, canvas *return_canvas){
     free(new_pixel_canvas);
     fclose(f);
 
-    print_canvas(return_canvas);
-
     return 0;
 }
 
 
+int write_canvas_to_file(char *file_name, canvas *c) {
+  FILE *fp = fopen(file_name, "w");
+  if (!fp) {
+  	perror("fopen");
+  	return -1;
+  }
+
+  pixel *p; 
+  char *pixel_c;
+
+  for (int i = 0; i < c->height; i++) {
+    for (int j = 0; j < c->width; j++) {
+        p = at(c, j, i);
+        switch (p->status) {
+        case START:
+          pixel_c = "S"; 
+          break;
+        case WALL:
+          pixel_c = "#"; 
+          break;
+        case UNVISITED:
+          pixel_c = " "; 
+          break;
+        case END:
+          pixel_c = "E"; 
+          break;
+        case PATH:
+          pixel_c = "@"; 
+          break;
+        default:
+          if(p->status > 0) {
+            pixel_c = "x"; 
+          } else {
+            pixel_c = "?"; 
+          }
+      }
+    fprintf("%d ", pixel_c);
+   }
+   fprintf(fp, "\n"); 
+  }
+
+  fclose(fp);
+
+  // Success
+  return 0;
+}
+
+/*
 int main(int argc, char *argv[]){
-    
+
     canvas c;
 
     int err = read_canvas_from_file(argv[1], &c);
     printf("%d\n", err);
+
+    print_canvas(&c);
     
     free(c.canv);
     free(c.path);
 
 }
+*/
