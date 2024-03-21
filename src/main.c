@@ -1,59 +1,21 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "canvas.h"
 #include "data_structures.h"
 #include "algorithms.h"
+#include "gui/file_handler.h"
 
-int main(void) {
+int main(int argc, char *argv[]) {
   printf("This is an interactive Pathfinding visualizer.\n");
-  printf("Please enter the width and height of the Canvas in which the algorithms should search:\n");
+  printf("Reading this file: %s", argv[1]);
 
-  int height;
-  printf("Height: ");
-  while(scanf("%d", &height) != 1)
-  {
-    //clear input buffer
-    while (getchar() != '\n');
+  canvas c;
 
-    printf("Invalid input. Please enter an integer.\n");
-    printf("Height: ");
+  int ret = read_canvas_from_file(argv[1], &c);
+  if(ret != 0){
+    printf("error occured: %d\n", ret);
+    abort();
   }
-
-  int width;
-  printf("Width: ");
-  while(scanf("%d", &width) != 1)
-  {
-    //clear input buffer
-    while (getchar() != '\n');
-
-    printf("Invalid input. Please enter an integer.\n");
-    printf("Width: ");
-  }
-
-  printf("Thank you! Now enter the coordinates where the algorithm should start.\n");
-  int start_x = 0;
-  printf("x: ");
-  while(scanf("%d", &start_x) != 1)
-  {
-    //clear input buffer
-    while (getchar() != '\n');
-
-    printf("Invalid input. Please enter an integer >= 1 and <= width-2.\n");
-    printf("x: ");
-  }
-
-  int start_y;
-  printf("y: ");
-  while(scanf("%d", &start_y) != 1)
-  {
-    //clear input buffer
-    while (getchar() != '\n');
-
-    printf("Invalid input. Please enter an integer >= 1 and <= height-2.\n");
-    printf("y: ");
-  }
-
-
-  canvas c = init_canvas(width,height, start_x, start_y, 1,1);
 
   printf("Canvas: \n");
   print_canvas(&c);
@@ -106,7 +68,7 @@ int main(void) {
 
   draw_path_on_canvas(&c);
 
-  failed = canv_to_file(&c, "found_canv.txt");
+  failed = write_canvas_to_file("found_canv.txt", &c);
   if (failed) {
     printf("canv_to_file failed. Errorcode: %d", failed);
   }
