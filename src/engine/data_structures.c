@@ -67,7 +67,7 @@ struct pixel *queue_pop(struct queue *q){
     return p;
 }
 
-
+/*
 void min_Heap_init(struct min_Heap *h, int size){
     h->size = size;
     h->min_Heap_arr = calloc(h->size, sizeof(struct node));//min_Heap_arr is **
@@ -179,5 +179,5 @@ static void printHeap(min_Heap *h){
     }
     puts("done");
 }
-
+*/
 
