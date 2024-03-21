@@ -44,12 +44,14 @@ struct pixel *queue_pop(struct queue *q);
 struct pixel *min_Heap_pop(struct min_Heap *h);
 void min_Heap_clear(min_Heap *h);
 
+/*
 static void swap(min_Heap *h, int index_parent, int index_child);
 static int get_parent(int index_node);
 static int get_smallest_child(min_Heap *h, int index_node); 
 static void bubble_up(min_Heap *h, node *n);
 static void bubble_down(min_Heap *h);
 static void printHeap(min_Heap *h);
+*/
 
 static inline bool stack_is_empty(stack *s){
     return s->top<=0;
