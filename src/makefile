@@ -1,6 +1,8 @@
-objects = main.o engine/canvas.o engine/data_structures.o engine/algorithms/breadth_first_search.o engine/algorithms/depth_first_search.o engine/algorithms/dijkstra.o engine/algorithms/a_star.o  
+objects = main.o engine/canvas.o engine/data_structures.o \
+				 engine/algorithms/breadth_first_search.o engine/algorithms/depth_first_search.o engine/algorithms/dijkstra.o engine/algorithms/a_star.o  \
+				 gui/file_handler.o
 
-includes = -I./engine -I./engine/algorithms
+includes = -I./engine -I./engine/algorithms -I./gui
 
 CFLAGS= -g -O0 -std=c99 -Wall -Wextra -pedantic $(includes) -lm 
 
